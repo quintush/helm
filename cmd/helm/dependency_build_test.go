@@ -107,7 +107,7 @@ func TestDependencyBuildCmdWithHelmV2Hash(t *testing.T) {
 	// Fix: Clean charts folder, to ensure test can run locally multiple times.
 	chartDir := filepath.Join(chartName, "charts")
 	err := os.RemoveAll(chartDir)
-	if (err != nil) {
+	if err != nil {
 		t.Logf("Unable to delete folder: %s", chartDir)
 		t.Fatal(err)
 	}
