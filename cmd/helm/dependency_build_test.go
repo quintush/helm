@@ -104,6 +104,14 @@ func TestDependencyBuildCmd(t *testing.T) {
 func TestDependencyBuildCmdWithHelmV2Hash(t *testing.T) {
 	chartName := "testdata/testcharts/issue-7233"
 
+	// Fix: Clean charts folder, to ensure test can run locally multiple times.
+	chartDir := filepath.Join(chartName, "charts")
+	err := os.RemoveAll(chartDir)
+	if err != nil {
+		t.Logf("Unable to delete folder: %s", chartDir)
+		t.Fatal(err)
+	}
+
 	cmd := fmt.Sprintf("dependency build '%s'", chartName)
 	_, out, err := executeActionCommand(cmd)
 

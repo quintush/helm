@@ -50,5 +50,10 @@ case "${1-}" in
   --coveralls)
     push_to_coveralls
     ;;
+  --sonarqube)
+    rm -rf /tmp/coverage 2>/dev/null
+    mkdir /tmp/coverage
+    cp "${profile}" /tmp/coverage
+    ;;
 esac
 

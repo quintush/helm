@@ -1,5 +1,5 @@
 ---
-version: 2
+version: 2.1
 
 jobs:
   build:
@@ -10,6 +10,7 @@ jobs:
     environment:
       GOCACHE: "/tmp/go/cache"
       GOLANGCI_LINT_VERSION: "1.27.0"
+      COVERAGEARG: "--sonarqube"
 
     steps:
       - checkout
@@ -22,10 +23,14 @@ jobs:
       - run:
           name: test
           command: make test-coverage
+      - sonarcloud/scan
       - deploy:
           name: deploy
           command: .circleci/deploy.sh
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+          
 workflows:
   version: 2
   build:
@@ -34,3 +39,4 @@ workflows:
           filters:
             tags:
               only: /.*/
+          context: SonarCloud
